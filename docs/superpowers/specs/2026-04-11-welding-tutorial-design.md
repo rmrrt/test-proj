@@ -151,6 +151,12 @@
 
 ```typescript
 // Шаг урока — может быть теорией, тестом или интерактивом
+type ContentBlock =
+  | { kind: 'text'; markdown: string }
+  | { kind: 'image'; src: string; caption?: string }
+  | { kind: 'svg-diagram'; svgId: string; caption?: string }
+  | { kind: 'warning'; text: string }   // блок "внимание" — красный акцент
+
 type Step =
   | { type: 'theory'; blocks: ContentBlock[]; sources: SourceRef[] }
   | { type: 'quiz'; questions: Question[]; passingScore: number }
