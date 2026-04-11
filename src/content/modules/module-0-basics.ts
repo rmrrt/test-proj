@@ -16,6 +16,10 @@ export const module0: Module = {
       sources: [
         { label: 'ГОСТ Р ИСО 4063-2010', url: 'https://docs.cntd.ru/document/1200082596' },
       ],
+      videos: [
+        { platform: 'youtube', url: 'https://www.youtube.com/@russianweldersteam', title: 'Виды сварки', channel: 'Школа Сварки РВТ' },
+        { platform: 'rutube', url: 'https://rutube.ru/video/e705372836169dfc3671dbcaaabff645/', title: 'Профессия сварщик. Основные виды сварки', channel: 'Учебный Центр ЦОПО' },
+      ],
       steps: [
         {
           type: 'theory',
@@ -68,6 +72,10 @@ export const module0: Module = {
       durationMin: 10,
       sources: [
         { label: 'ГОСТ 12.3.003-86', url: 'https://docs.cntd.ru/document/5200289' },
+      ],
+      videos: [
+        { platform: 'youtube', url: 'https://www.youtube.com/@russianweldersteam', title: 'Техника безопасности при сварке', channel: 'Школа Сварки РВТ' },
+        { platform: 'rutube', url: 'https://rutube.ru/plst/200878/', title: 'Уроки сварки — средства защиты и безопасность', channel: 'Академия СВАРГО' },
       ],
       steps: [
         {
@@ -126,6 +134,10 @@ export const module0: Module = {
       durationMin: 10,
       sources: [
         { label: 'ГОСТ Р ИСО 857-1-2009', url: 'https://docs.cntd.ru/document/1200082597' },
+      ],
+      videos: [
+        { platform: 'youtube', url: 'https://www.youtube.com/@russianweldersteam', title: 'Физика сварочного процесса', channel: 'Школа Сварки РВТ' },
+        { platform: 'rutube', url: 'https://rutube.ru/video/88e01dc578241681e7765b84ed3d0a43/', title: 'Материаловедение: строение и кристаллизация металлов', channel: 'SIKE' },
       ],
       steps: [
         {
@@ -195,6 +207,10 @@ export const module0: Module = {
       sources: [
         { label: 'ГОСТ 2601-84', url: 'https://docs.cntd.ru/document/1200005691' },
       ],
+      videos: [
+        { platform: 'youtube', url: 'https://www.youtube.com/@russianweldersteam', title: 'Сварочная дуга: ток и полярность', channel: 'Школа Сварки РВТ' },
+        { platform: 'rutube', url: 'https://rutube.ru/video/29b6bc90412f417a665afbe071fa9f5c/', title: 'Как научиться варить электросваркой — ручная дуговая сварка', channel: 'FUBAG RUSSIA' },
+      ],
       steps: [
         {
           type: 'theory',
@@ -262,6 +278,10 @@ export const module0: Module = {
       durationMin: 12,
       sources: [
         { label: 'ГОСТ 30242-97', url: 'https://docs.cntd.ru/document/1200003891' },
+      ],
+      videos: [
+        { platform: 'youtube', url: 'https://www.youtube.com/@russianweldersteam', title: 'Дефекты сварного шва', channel: 'Школа Сварки РВТ' },
+        { platform: 'rutube', url: 'https://rutube.ru/channel/30902026/', title: 'Дефекты сварного шва', channel: 'Сварщик | Обучающие видео' },
       ],
       steps: [
         {
@@ -337,6 +357,10 @@ export const module0: Module = {
       sources: [
         { label: 'ГОСТ 2.312-72', url: 'https://docs.cntd.ru/document/1200004228' },
       ],
+      videos: [
+        { platform: 'youtube', url: 'https://www.youtube.com/@russianweldersteam', title: 'Чтение сварочных чертежей', channel: 'Школа Сварки РВТ' },
+        { platform: 'rutube', url: 'https://rutube.ru/channel/30902026/', title: 'Обозначение сварных швов на чертежах', channel: 'Сварщик | Обучающие видео' },
+      ],
       steps: [
         {
           type: 'theory',
@@ -395,6 +419,10 @@ export const module0: Module = {
       durationMin: 8,
       sources: [
         { label: 'ГОСТ 5264-80', url: 'https://docs.cntd.ru/document/1200004221' },
+      ],
+      videos: [
+        { platform: 'youtube', url: 'https://www.youtube.com/@russianweldersteam', title: 'Подготовка металла к сварке', channel: 'Школа Сварки РВТ' },
+        { platform: 'rutube', url: 'https://rutube.ru/plst/90009/', title: 'Уроки сварки для начинающих', channel: 'FUBAG RUSSIA' },
       ],
       steps: [
         {

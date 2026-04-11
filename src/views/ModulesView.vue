@@ -2,17 +2,19 @@
 import { computed } from 'vue'
 import { useContentStore } from '@/stores/content'
 import { useProgressStore } from '@/stores/progress'
+import { useDevMode } from '@/composables/useDevMode'
 import { useRouter } from 'vue-router'
 
 const content = useContentStore()
 const progress = useProgressStore()
+const { isDevMode } = useDevMode()
 const router = useRouter()
 
 const modulesList = computed(() =>
   content.modules.map((mod) => ({
     ...mod,
     completed: progress.isModuleCompleted(mod.id),
-    unlocked: content.isModuleUnlocked(mod.id, progress.progress.completedModules),
+    unlocked: isDevMode.value || content.isModuleUnlocked(mod.id, progress.progress.completedModules),
     completedLessons: mod.lessons.filter((l) => progress.isLessonCompleted(l.id)).length,
   })),
 )

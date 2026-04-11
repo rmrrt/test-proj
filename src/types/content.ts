@@ -39,6 +39,13 @@ export type Step =
   | { type: 'quiz'; questions: Question[]; passingScore: number }
   | { type: 'defect-challenge'; challengeId: string }
 
+export type VideoRef = {
+  platform: string
+  url: string
+  title: string
+  channel: string
+}
+
 export type Lesson = {
   id: string
   title: string
@@ -46,6 +53,7 @@ export type Lesson = {
   durationMin: number
   steps: Step[]
   sources?: SourceRef[]
+  videos?: VideoRef[]
 }
 
 export type Module = {

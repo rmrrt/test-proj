@@ -16,6 +16,10 @@ export const module3: Module = {
       sources: [
         { label: 'ГОСТ Р 52598-2006', url: 'https://docs.cntd.ru/document/1200044193' },
       ],
+      videos: [
+        { platform: 'youtube', url: 'https://www.youtube.com/@russianweldersteam', title: 'Строение металлов', channel: 'Школа Сварки РВТ' },
+        { platform: 'rutube', url: 'https://rutube.ru/video/88e01dc578241681e7765b84ed3d0a43/', title: 'Материаловедение: строение и кристаллизация металлов', channel: 'SIKE' },
+      ],
       steps: [
         {
           type: 'theory',
@@ -81,6 +85,10 @@ export const module3: Module = {
         { label: 'ГОСТ 380-2005', url: 'https://docs.cntd.ru/document/1200033271' },
         { label: 'ГОСТ 4543-2016', url: 'https://docs.cntd.ru/document/1200139683' },
       ],
+      videos: [
+        { platform: 'youtube', url: 'https://www.youtube.com/@russianweldersteam', title: 'Классификация сталей по ГОСТ', channel: 'Школа Сварки РВТ' },
+        { platform: 'rutube', url: 'https://rutube.ru/plst/841148/', title: 'Технология металлов и материаловедение', channel: 'Сергей Шорсткин' },
+      ],
       steps: [
         {
           type: 'theory',
@@ -135,6 +143,10 @@ export const module3: Module = {
       sources: [
         { label: 'ГОСТ 3242-79', url: 'https://docs.cntd.ru/document/1200005422' },
         { label: 'ГОСТ Р ИСО 581-2009', url: 'https://docs.cntd.ru/document/1200073271' },
+      ],
+      videos: [
+        { platform: 'youtube', url: 'https://www.youtube.com/@russianweldersteam', title: 'Свариваемость металлов', channel: 'Школа Сварки РВТ' },
+        { platform: 'rutube', url: 'https://rutube.ru/channel/27140883/', title: 'Свариваемость металлов', channel: 'СВАРИВАЕМ БУДУЩЕЕ' },
       ],
       steps: [
         {
@@ -204,6 +216,10 @@ export const module3: Module = {
       sources: [
         { label: 'ГОСТ Р ИСО 857-1-2009', url: 'https://docs.cntd.ru/document/1200082597' },
       ],
+      videos: [
+        { platform: 'youtube', url: 'https://www.youtube.com/@russianweldersteam', title: 'Тепловые процессы при сварке', channel: 'Школа Сварки РВТ' },
+        { platform: 'rutube', url: 'https://rutube.ru/plst/551494/', title: 'Диаграмма Fe-C. Стали, чугуны', channel: 'Материаловедение' },
+      ],
       steps: [
         {
           type: 'theory',
@@ -262,6 +278,10 @@ export const module3: Module = {
       sources: [
         { label: 'ГОСТ 3242-79', url: 'https://docs.cntd.ru/document/1200005422' },
         { label: 'ГОСТ Р ИСО 17637-2014', url: 'https://docs.cntd.ru/document/1200110328' },
+      ],
+      videos: [
+        { platform: 'youtube', url: 'https://www.youtube.com/@russianweldersteam', title: 'Контроль качества сварного шва', channel: 'Школа Сварки РВТ' },
+        { platform: 'rutube', url: 'https://rutube.ru/plst/90009/', title: 'Уроки сварки для начинающих', channel: 'FUBAG RUSSIA' },
       ],
       steps: [
         {
