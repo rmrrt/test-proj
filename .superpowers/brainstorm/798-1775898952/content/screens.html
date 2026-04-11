@@ -1,0 +1,80 @@
+<h2>Структура экранов приложения</h2>
+<p class="subtitle">Как пользователь движется по приложению</p>
+
+<div style="font-family: monospace; font-size: 13px; line-height: 1.8; background: #0d1117; border: 1px solid #e94560; border-radius: 8px; padding: 24px; color: #e2e2e2;">
+
+  <div style="color: #e94560; font-weight: 700; margin-bottom: 16px;">ЭКРАНЫ / МАРШРУТЫ</div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+
+    <div>
+      <div style="color: #e94560; font-size: 11px; letter-spacing: 1px; margin-bottom: 8px;">ОНБОРДИНГ</div>
+      <div style="background: #161b22; border-radius: 6px; padding: 12px; border-left: 3px solid #e94560;">
+        <div style="color: #58a6ff; margin-bottom: 4px;">/ → /onboarding</div>
+        <div style="color: #8b949e; font-size: 11px; margin-bottom: 10px;">Первый запуск</div>
+        <div style="color: #e2e2e2; font-size: 12px;">┌ "Я новичок"</div>
+        <div style="color: #e2e2e2; font-size: 12px; padding-left: 12px;">└→ /modules (с нуля)</div>
+        <div style="color: #e2e2e2; font-size: 12px; margin-top: 4px;">┌ "Уже варил"</div>
+        <div style="color: #e2e2e2; font-size: 12px; padding-left: 12px;">└→ /modules (пропуск азов)</div>
+      </div>
+    </div>
+
+    <div>
+      <div style="color: #e94560; font-size: 11px; letter-spacing: 1px; margin-bottom: 8px;">ГЛАВНАЯ — МОДУЛИ</div>
+      <div style="background: #161b22; border-radius: 6px; padding: 12px; border-left: 3px solid #e94560;">
+        <div style="color: #58a6ff; margin-bottom: 4px;">/modules</div>
+        <div style="color: #8b949e; font-size: 11px; margin-bottom: 10px;">Карта обучения</div>
+        <div style="color: #e2e2e2; font-size: 12px;">📦 Модуль 1: Азы</div>
+        <div style="color: #e2e2e2; font-size: 12px;">📦 Модуль 2: Оборудование</div>
+        <div style="color: #e2e2e2; font-size: 12px;">📦 Модуль 3: Швы по ГОСТ</div>
+        <div style="color: #8b949e; font-size: 12px;">📦 Модуль 4–N: 🔒 заблок.</div>
+      </div>
+    </div>
+
+    <div>
+      <div style="color: #e94560; font-size: 11px; letter-spacing: 1px; margin-bottom: 8px;">УРОК</div>
+      <div style="background: #161b22; border-radius: 6px; padding: 12px; border-left: 3px solid #e94560;">
+        <div style="color: #58a6ff; margin-bottom: 4px;">/lesson/:id</div>
+        <div style="color: #8b949e; font-size: 11px; margin-bottom: 10px;">Пошаговый контент</div>
+        <div style="color: #e2e2e2; font-size: 12px;">① Теория (текст + схемы)</div>
+        <div style="color: #e2e2e2; font-size: 12px;">② Тест с анимацией ошибок</div>
+        <div style="color: #e2e2e2; font-size: 12px;">③ Итог + разблокировка</div>
+      </div>
+    </div>
+
+    <div>
+      <div style="color: #e94560; font-size: 11px; letter-spacing: 1px; margin-bottom: 8px;">ИНСТРУМЕНТЫ</div>
+      <div style="background: #161b22; border-radius: 6px; padding: 12px; border-left: 3px solid #e94560;">
+        <div style="color: #58a6ff; margin-bottom: 4px;">/tools</div>
+        <div style="color: #8b949e; font-size: 11px; margin-bottom: 10px;">Всегда доступны</div>
+        <div style="color: #e2e2e2; font-size: 12px;">🔢 Калькулятор режимов</div>
+        <div style="color: #e2e2e2; font-size: 12px;">🔍 Найди дефект (игра)</div>
+        <div style="color: #e2e2e2; font-size: 12px;">📋 Справочник ГОСТ</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-top: 20px; border-top: 1px solid #21262d; padding-top: 16px;">
+    <div style="color: #e94560; font-size: 11px; letter-spacing: 1px; margin-bottom: 8px;">НИЖНЯЯ НАВИГАЦИЯ (мобайл)</div>
+    <div style="display: flex; gap: 0; background: #161b22; border-radius: 6px; overflow: hidden; border: 1px solid #21262d;">
+      <div style="flex: 1; text-align: center; padding: 10px 6px; border-right: 1px solid #21262d;">
+        <div style="font-size: 16px;">🏠</div>
+        <div style="font-size: 10px; color: #e94560; margin-top: 2px;">Модули</div>
+      </div>
+      <div style="flex: 1; text-align: center; padding: 10px 6px; border-right: 1px solid #21262d;">
+        <div style="font-size: 16px;">🔧</div>
+        <div style="font-size: 10px; color: #8b949e; margin-top: 2px;">Инструменты</div>
+      </div>
+      <div style="flex: 1; text-align: center; padding: 10px 6px;">
+        <div style="font-size: 16px;">📊</div>
+        <div style="font-size: 10px; color: #8b949e; margin-top: 2px;">Прогресс</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="margin-top: 16px; padding: 12px 16px; background: rgba(233,69,96,0.08); border-radius: 6px; border: 1px solid rgba(233,69,96,0.2); font-size: 13px; color: #e2e2e2;">
+  <span style="color:#e94560; font-weight:700;">Прогресс в localStorage:</span> пройденные уроки, разблокированные модули, результаты тестов — всё сохраняется локально. Структура совместима с будущим backend sync.
+</div>

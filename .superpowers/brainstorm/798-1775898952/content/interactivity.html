@@ -1,0 +1,46 @@
+<h2>Какой интерактив в уроках?</h2>
+<p class="subtitle">Можно выбрать несколько — что войдёт в MVP</p>
+
+<div class="options" data-multiselect>
+
+  <div class="option" data-choice="simulator" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Симулятор сварки</h3>
+      <p>Canvas/SVG-игра: ведёшь "электрод" мышью по шву, нужно держать нужную скорость и угол. Система оценивает ровность шва. Сложно, но очень наглядно</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="quiz" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Тесты с объяснением</h3>
+      <p>После каждого блока теории — вопросы. Но не просто правильно/неправильно: при ошибке показывается анимация "что происходит если так делать". Быстро делается, высокая ценность</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="drag" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Drag-and-drop сборка</h3>
+      <p>Собери сварочный пост: перетащи маску, электрод, зажим. Расставь оборудование по технике безопасности. Или: подбери правильный режим тока для толщины металла</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="defects" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Найди дефект</h3>
+      <p>Показывается фото/рисунок сварного шва — нужно кликнуть на дефект и назвать его. Поры, подрезы, непровары — по ГОСТ классификации. Тренирует глаз</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="calculator" onclick="toggleSelect(this)">
+    <div class="letter">E</div>
+    <div class="content">
+      <h3>Калькулятор режимов</h3>
+      <p>Интерактивный инструмент: вводишь толщину металла, тип стыка — получаешь режим по ГОСТ (ток, напряжение, скорость). Не игра, но очень практично и полезно</p>
+    </div>
+  </div>
+
+</div>
