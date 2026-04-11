@@ -29,57 +29,24 @@ const moduleStats = computed(() =>
       <div class="gost-tag">СТАТИСТИКА</div>
       <h2>Мой прогресс</h2>
     </div>
-
     <div class="overall card">
       <div class="overall-numbers">
-        <div class="stat">
-          <span class="stat-value">{{ completedLessons }}</span>
-          <span class="stat-label">уроков пройдено</span>
-        </div>
-        <div class="stat">
-          <span class="stat-value">{{ completedModules }}</span>
-          <span class="stat-label">модулей завершено</span>
-        </div>
-        <div class="stat">
-          <span class="stat-value">{{ overallPct }}%</span>
-          <span class="stat-label">курса пройдено</span>
-        </div>
+        <div class="stat"><span class="stat-value">{{ completedLessons }}</span><span class="stat-label">уроков пройдено</span></div>
+        <div class="stat"><span class="stat-value">{{ completedModules }}</span><span class="stat-label">модулей завершено</span></div>
+        <div class="stat"><span class="stat-value">{{ overallPct }}%</span><span class="stat-label">курса пройдено</span></div>
       </div>
-      <div class="progress-bar-big">
-        <div class="progress-fill-big" :style="{ width: overallPct + '%' }" />
-      </div>
+      <div class="progress-bar-big"><div class="progress-fill-big" :style="{ width: overallPct + '%' }" /></div>
     </div>
-
     <div class="module-stats">
       <div v-for="mod in moduleStats" :key="mod.id" class="mod-stat card">
         <div class="mod-stat-header">
-          <span>{{ mod.icon }}</span>
-          <h3>{{ mod.title }}</h3>
+          <span>{{ mod.icon }}</span><h3>{{ mod.title }}</h3>
           <span v-if="mod.completed" class="done-badge">✅</span>
         </div>
         <div class="mod-progress-row">
-          <div class="progress-bar">
-            <div
-              class="progress-fill"
-              :style="{ width: mod.total ? `${(mod.lessonsDone / mod.total) * 100}%` : '0%' }"
-            />
-          </div>
+          <div class="progress-bar"><div class="progress-fill" :style="{ width: mod.total ? `${(mod.lessonsDone / mod.total) * 100}%` : '0%' }" /></div>
           <span class="prog-text">{{ mod.lessonsDone }}/{{ mod.total }}</span>
         </div>
-      </div>
-    </div>
-
-    <div v-if="Object.keys(progress.progress.quizScores).length" class="quiz-scores card">
-      <div class="gost-tag" style="margin-bottom:8px;">РЕЗУЛЬТАТЫ ТЕСТОВ</div>
-      <div
-        v-for="(score, lessonId) in progress.progress.quizScores"
-        :key="lessonId"
-        class="score-row"
-      >
-        <span class="score-lesson">{{ lessonId }}</span>
-        <span class="score-pct" :class="{ good: score >= 0.8, bad: score < 0.8 }">
-          {{ Math.round(score * 100) }}%
-        </span>
       </div>
     </div>
   </div>
@@ -88,85 +55,18 @@ const moduleStats = computed(() =>
 <style scoped>
 .header { margin-bottom: 16px; }
 .header h2 { margin-top: 4px; }
-
 .overall { margin-bottom: 16px; }
-
-.overall-numbers {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 14px;
-  text-align: center;
-}
-
+.overall-numbers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 14px; text-align: center; }
 .stat-value { display: block; font-size: 28px; font-weight: 800; color: var(--accent); }
 .stat-label { display: block; font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
-
-.progress-bar-big {
-  height: 8px;
-  background: var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.progress-fill-big {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 4px;
-  transition: width 0.5s ease;
-}
-
-.module-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 16px;
-}
-
-.mod-stat-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
+.progress-bar-big { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.progress-fill-big { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.5s ease; }
+.module-stats { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+.mod-stat-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
 .mod-stat-header h3 { flex: 1; font-size: 15px; }
 .done-badge { font-size: 16px; }
-
-.mod-progress-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.progress-bar {
-  flex: 1;
-  height: 4px;
-  background: var(--border);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 2px;
-  transition: width 0.3s;
-}
-
+.mod-progress-row { display: flex; align-items: center; gap: 8px; }
+.progress-bar { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.3s; }
 .prog-text { font-size: 11px; color: var(--text-secondary); }
-
-.quiz-scores { display: flex; flex-direction: column; gap: 6px; }
-
-.score-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
-}
-
-.score-lesson { color: var(--text-secondary); font-family: monospace; font-size: 11px; }
-.score-pct { font-weight: 700; }
-.score-pct.good { color: var(--success); }
-.score-pct.bad { color: var(--error); }
 </style>

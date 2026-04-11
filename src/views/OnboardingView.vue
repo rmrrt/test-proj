@@ -52,78 +52,21 @@ function choose(level: 'beginner' | 'experienced') {
   padding: 32px 20px;
   gap: 40px;
 }
-
-.hero {
-  text-align: center;
-}
-
-.hero h1 {
-  font-size: 32px;
-  margin: 12px 0 8px;
-}
-
-.subtitle {
-  color: var(--text-secondary);
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-.choices {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
+.hero { text-align: center; }
+.hero h1 { font-size: 32px; margin: 12px 0 8px; }
+.subtitle { color: var(--text-secondary); font-size: 15px; line-height: 1.6; }
+.choices { display: flex; flex-direction: column; gap: 12px; }
 .choice-card {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-  cursor: pointer;
-  text-align: left;
-  transition: border-color 0.15s, transform 0.1s;
-  color: var(--text-primary);
-  width: 100%;
+  display: flex; align-items: center; gap: 16px;
+  background: var(--bg-secondary); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px; cursor: pointer; text-align: left;
+  transition: border-color 0.15s, transform 0.1s; color: var(--text-primary); width: 100%;
 }
-
-.choice-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-1px);
-}
-
-.choice-card:active {
-  transform: scale(0.98);
-}
-
-.choice-icon {
-  font-size: 32px;
-  flex-shrink: 0;
-}
-
-.choice-content h3 {
-  margin-bottom: 4px;
-}
-
-.choice-content p {
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.4;
-}
-
-.choice-arrow {
-  margin-left: auto;
-  color: var(--accent);
-  font-size: 20px;
-  flex-shrink: 0;
-}
-
-.disclaimer {
-  text-align: center;
-  font-size: 11px;
-  color: var(--text-secondary);
-  line-height: 1.5;
-}
+.choice-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+.choice-card:active { transform: scale(0.98); }
+.choice-icon { font-size: 32px; flex-shrink: 0; }
+.choice-content h3 { margin-bottom: 4px; }
+.choice-content p { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
+.choice-arrow { margin-left: auto; color: var(--accent); font-size: 20px; flex-shrink: 0; }
+.disclaimer { text-align: center; font-size: 11px; color: var(--text-secondary); line-height: 1.5; }
 </style>

@@ -56,19 +56,7 @@ const tabs = [
   padding: 4px 0;
 }
 
-.tab.active {
-  color: var(--accent);
-}
-
-.tab-icon {
-  font-size: 18px;
-  line-height: 1;
-}
-
-.tab-label {
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  text-transform: uppercase;
-}
+.tab.active { color: var(--accent); }
+.tab-icon { font-size: 18px; line-height: 1; }
+.tab-label { font-size: 9px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; }
 </style>
