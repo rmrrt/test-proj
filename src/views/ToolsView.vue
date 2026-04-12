@@ -2,9 +2,10 @@
 import { ref } from 'vue'
 import ModeCalculator from '@/components/tools/ModeCalculator.vue'
 import DefectChallenge from '@/components/tools/DefectChallenge.vue'
+import WeldingChecklist from '@/components/tools/WeldingChecklist.vue'
 import { defectChallenges } from '@/content/tools/defect-challenges'
 
-const activeTab = ref<'calculator' | 'defects'>('calculator')
+const activeTab = ref<'calculator' | 'defects' | 'checklist'>('calculator')
 const currentDefectIndex = ref(0)
 const defectKey = ref(0)
 
@@ -36,12 +37,19 @@ function nextDefect() {
       >
         🔍 Дефекты
       </button>
+      <button
+        class="tab-btn"
+        :class="{ active: activeTab === 'checklist' }"
+        @click="activeTab = 'checklist'"
+      >
+        ✅ Чеклист
+      </button>
     </div>
 
     <div class="tool-content card">
       <ModeCalculator v-if="activeTab === 'calculator'" />
 
-      <div v-else>
+      <div v-else-if="activeTab === 'defects'">
         <DefectChallenge
           v-if="defectChallenges[currentDefectIndex]"
           :key="defectKey"
@@ -52,6 +60,8 @@ function nextDefect() {
           Задача {{ currentDefectIndex + 1 }} из {{ defectChallenges.length }}
         </p>
       </div>
+
+      <WeldingChecklist v-else-if="activeTab === 'checklist'" />
     </div>
   </div>
 </template>

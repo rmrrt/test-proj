@@ -46,6 +46,11 @@ export type VideoRef = {
   channel: string
 }
 
+export type PracticalNote = {
+  summary: string
+  examples?: string[]
+}
+
 export type Lesson = {
   id: string
   title: string
@@ -54,6 +59,7 @@ export type Lesson = {
   steps: Step[]
   sources?: SourceRef[]
   videos?: VideoRef[]
+  practicalNote?: PracticalNote
 }
 
 export type Module = {

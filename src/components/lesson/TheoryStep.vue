@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import type { ContentBlock, SourceRef } from '@/types/content'
+import type { ContentBlock, SourceRef, VideoRef, PracticalNote } from '@/types/content'
 
 defineProps<{
   blocks: ContentBlock[]
   sources?: SourceRef[]
+  videos?: VideoRef[]
+  practicalNote?: PracticalNote
 }>()
 
 const emit = defineEmits<{ done: [] }>()
@@ -24,6 +26,38 @@ const emit = defineEmits<{ done: [] }>()
           <img :src="block.src" :alt="block.caption" />
           <p v-if="block.caption" class="caption">{{ block.caption }}</p>
         </div>
+      </div>
+    </div>
+
+    <div v-if="practicalNote" class="practical-note">
+      <div class="practical-header">
+        <span class="practical-icon">💡</span>
+        <span class="practical-title">Что это даёт на практике</span>
+      </div>
+      <p class="practical-summary">{{ practicalNote.summary }}</p>
+      <ul v-if="practicalNote.examples?.length" class="practical-examples">
+        <li v-for="(ex, i) in practicalNote.examples" :key="i">{{ ex }}</li>
+      </ul>
+    </div>
+
+    <div v-if="videos?.length" class="video-links">
+      <span class="gost-tag">ВИДЕО ПО ТЕМЕ</span>
+      <div class="video-list">
+        <a
+          v-for="v in videos"
+          :key="v.url"
+          :href="v.url"
+          target="_blank"
+          rel="noopener"
+          class="video-item"
+          :class="v.platform"
+        >
+          <span class="video-icon">{{ v.platform === 'youtube' ? '▶' : '▶' }}</span>
+          <span class="video-info">
+            <span class="video-title">{{ v.title }}</span>
+            <span class="video-channel">{{ v.channel }}</span>
+          </span>
+        </a>
       </div>
     </div>
 
@@ -160,6 +194,136 @@ export { renderMarkdown }
   color: var(--text-secondary);
   text-align: center;
   margin-top: 6px;
+}
+
+.practical-note {
+  background: rgba(210, 140, 30, 0.08);
+  border-left: 3px solid #d28c1e;
+  border-radius: 0 8px 8px 0;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.practical-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.practical-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.practical-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #d28c1e;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.practical-summary {
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.practical-examples {
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+}
+
+.practical-examples li {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.video-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.video-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.video-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.video-item:hover {
+  background: var(--bg-primary);
+}
+
+.video-item.youtube {
+  border-color: rgba(255, 0, 0, 0.25);
+}
+
+.video-item.youtube:hover {
+  border-color: rgba(255, 0, 0, 0.5);
+}
+
+.video-item.youtube .video-icon {
+  color: #ff4444;
+}
+
+.video-item.rutube {
+  border-color: rgba(25, 118, 210, 0.25);
+}
+
+.video-item.rutube:hover {
+  border-color: rgba(25, 118, 210, 0.5);
+}
+
+.video-item.rutube .video-icon {
+  color: #1976d2;
+}
+
+.video-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+}
+
+.video-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.video-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.video-channel {
+  font-size: 11px;
+  color: var(--text-secondary);
 }
 
 .sources {
