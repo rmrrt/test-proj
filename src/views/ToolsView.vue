@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import ModeCalculator from '@/components/tools/ModeCalculator.vue'
 import DefectChallenge from '@/components/tools/DefectChallenge.vue'
+import WeldingChecklist from '@/components/tools/WeldingChecklist.vue'
 import { defectChallenges } from '@/content/tools/defect-challenges'
 
-const activeTab = ref<'calculator' | 'defects'>('calculator')
+const activeTab = ref<'calculator' | 'defects' | 'checklist'>('calculator')
+const router = useRouter()
 const currentDefectIndex = ref(0)
 const defectKey = ref(0)
 
@@ -21,6 +24,10 @@ function nextDefect() {
       <h2>Инструменты сварщика</h2>
     </div>
 
+    <button class="custom-btn" @click="router.push('/tools/checklists')">
+      📝 Мой чеклист
+    </button>
+
     <div class="tabs">
       <button
         class="tab-btn"
@@ -36,12 +43,19 @@ function nextDefect() {
       >
         🔍 Дефекты
       </button>
+      <button
+        class="tab-btn"
+        :class="{ active: activeTab === 'checklist' }"
+        @click="activeTab = 'checklist'"
+      >
+        ✅ Чеклист
+      </button>
     </div>
 
     <div class="tool-content card">
       <ModeCalculator v-if="activeTab === 'calculator'" />
 
-      <div v-else>
+      <div v-else-if="activeTab === 'defects'">
         <DefectChallenge
           v-if="defectChallenges[currentDefectIndex]"
           :key="defectKey"
@@ -52,6 +66,8 @@ function nextDefect() {
           Задача {{ currentDefectIndex + 1 }} из {{ defectChallenges.length }}
         </p>
       </div>
+
+      <WeldingChecklist v-else-if="activeTab === 'checklist'" />
     </div>
   </div>
 </template>
@@ -87,6 +103,28 @@ function nextDefect() {
 
 .tool-content {
   padding: 20px;
+}
+
+.custom-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  background: var(--bg-secondary);
+  border: 1px dashed var(--accent);
+  border-radius: 10px;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.custom-btn:hover {
+  background: rgba(233,69,96,0.08);
 }
 
 .defect-counter {

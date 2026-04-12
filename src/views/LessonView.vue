@@ -110,6 +110,8 @@ function getDefectChallenge(challengeId: string) {
         <TheoryStep
           :blocks="currentStep.blocks"
           :sources="currentStep.sources"
+          :videos="lesson.videos"
+          :practicalNote="lesson.practicalNote"
           @done="onTheoryDone"
         />
       </template>
