@@ -43,6 +43,13 @@ const categories = [
     title: 'Электроды',
     icon: '🔩',
     description: 'Для начала: АНО-21 Ø3 мм — легко поджигаются, прощают ошибки.',
+    brands: [
+      { mark: 'МР-3', type: 'рутиловое', note: 'Универсальный старт, лёгкий розжиг, AC/DC, углеродистая сталь' },
+      { mark: 'АНО-21', type: 'рутиловое', note: 'Для начинающих, очень лёгкий розжиг, AC/DC' },
+      { mark: 'УОНИ-13/55', type: 'основное', note: 'Ответственные швы, только DC, прочность выше, капризен к розжигу' },
+      { mark: 'ОЗЛ-8', type: 'нержавейка', note: 'Нержавеющая сталь, DC обратная полярность' },
+      { mark: 'ОЗА-1/ОЗА-2', type: 'алюминий', note: 'Алюминий и его сплавы' },
+    ],
     params: [
       { label: 'Диаметр', value: '3 мм (для старта)' },
       { label: 'Марка', value: 'АНО-21 или МР-3' },
@@ -77,6 +84,63 @@ const categories = [
       { label: 'Ozon', url: 'https://www.ozon.ru/category/svarochnaya-odezhda/' },
     ],
   },
+  {
+    title: 'Инструмент подготовки кромок',
+    icon: '⚙️',
+    description: 'Инструмент для снятия фасок, зачистки и формирования кромок перед сваркой.',
+    params: [
+      { label: 'Назначение', value: 'Снятие фасок, зачистка' },
+      { label: 'Точность', value: '±1–2°' },
+      { label: 'Производительность', value: 'Ручная / Эл.' },
+    ],
+    tiers: [
+      { name: 'Бюджет', price: '1 000–3 000 ₽', example: 'УШМ 125мм + зачистной диск, напильник по металлу, зубило' },
+      { name: 'Средний', price: '3 000–8 000 ₽', example: 'Фаскосниматель ручной (30/45°), набор напильников, абразивные диски' },
+      { name: 'Профи', price: '8 000–25 000 ₽', example: 'Электрический фаскосниматель, торцефрезерный станок, пневмозачистная машина' },
+    ],
+    links: [
+      { label: 'ВсеИнструменты', url: 'https://www.vseinstrumenti.ru/instrument/shlifmashiny/uglovye/' },
+      { label: 'Ozon', url: 'https://www.ozon.ru/category/uglovye-shlifovalnye-mashiny/' },
+    ],
+  },
+  {
+    title: 'Вспомогательный инструмент',
+    icon: '🔧',
+    description: 'Инструмент для сборки, фиксации и разметки деталей перед и во время сварки.',
+    params: [
+      { label: 'Тип фиксации', value: 'Магнит / Зажим' },
+      { label: 'Материал', value: 'Сталь / Чугун' },
+      { label: 'Диапазон', value: 'До 200 мм' },
+    ],
+    tiers: [
+      { name: 'Бюджет', price: '500–2 000 ₽', example: 'Магнитный угольник 45/90°, 2–3 G-образные струбцины, молоток-шлакоотбойник, металлическая щётка' },
+      { name: 'Средний', price: '2 000–5 000 ₽', example: 'Набор магнитных угольников (несколько углов), быстрозажимные струбцины, кернер, угольник слесарный' },
+      { name: 'Профи', price: '5 000–15 000 ₽', example: 'Сборочно-сварочный стол или приспособления, комплект фиксаторов, центратор для труб' },
+    ],
+    links: [
+      { label: 'ВсеИнструменты', url: 'https://www.vseinstrumenti.ru/instrument/strubtsiny/' },
+      { label: 'Ozon', url: 'https://www.ozon.ru/category/strubtsiny/' },
+    ],
+  },
+  {
+    title: 'Средства контроля шва',
+    icon: '📐',
+    description: 'Инструменты для проверки геометрии шва, зазоров и углов соединений.',
+    params: [
+      { label: 'Метод контроля', value: 'Визуальный / УЗК' },
+      { label: 'Точность', value: '0.1–1 мм' },
+      { label: 'Соответствие', value: 'ГОСТ' },
+    ],
+    tiers: [
+      { name: 'Бюджет', price: '500–1 500 ₽', example: 'Шаблон сварщика УШС-3 (катет, высота усиления, зазор), металлическая линейка, угломер' },
+      { name: 'Средний', price: '1 500–4 000 ₽', example: 'Набор щупов для зазоров, штангенциркуль, угломер цифровой' },
+      { name: 'Профи', price: '4 000–15 000 ₽', example: 'Профилометр шва, ультразвуковой толщиномер, эндоскоп для внутреннего контроля' },
+    ],
+    links: [
+      { label: 'ВсеИнструменты', url: 'https://www.vseinstrumenti.ru/izmeritelnye-instrumenty/' },
+      { label: 'Ozon', url: 'https://www.ozon.ru/category/shablony-svarshhika/' },
+    ],
+  },
 ]
 </script>
 
@@ -107,6 +171,19 @@ const categories = [
           <div>
             <h3>{{ cat.title }}</h3>
             <p class="cat-desc">{{ cat.description }}</p>
+          </div>
+        </div>
+
+        <div v-if="cat.brands" class="brands">
+          <div class="brands-header">
+            <span class="brands-col brands-col-mark">Марка</span>
+            <span class="brands-col brands-col-type">Тип</span>
+            <span class="brands-col brands-col-note">Применение</span>
+          </div>
+          <div v-for="b in cat.brands" :key="b.mark" class="brands-row">
+            <span class="brands-col brands-col-mark brand-mark">{{ b.mark }}</span>
+            <span class="brands-col brands-col-type brand-type">{{ b.type }}</span>
+            <span class="brands-col brands-col-note">{{ b.note }}</span>
           </div>
         </div>
 
@@ -245,4 +322,37 @@ const categories = [
 }
 
 .link-btn:hover { background: rgba(88,166,255,0.15); }
+
+.brands {
+  font-size: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.brands-header {
+  display: flex;
+  background: rgba(255,255,255,0.06);
+  padding: 4px 8px;
+  gap: 8px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+}
+
+.brands-row {
+  display: flex;
+  padding: 5px 8px;
+  gap: 8px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.brands-col { overflow: hidden; }
+.brands-col-mark { flex: 0 0 90px; }
+.brands-col-type { flex: 0 0 80px; color: var(--text-secondary); }
+.brands-col-note { flex: 1; color: var(--text-secondary); }
+
+.brand-mark { font-weight: 700; color: var(--text-primary); }
+.brand-type { font-style: italic; }
 </style>
