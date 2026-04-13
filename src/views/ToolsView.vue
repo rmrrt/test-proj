@@ -7,6 +7,7 @@ import WeldingChecklist from '@/components/tools/WeldingChecklist.vue'
 import CarbonEquivalentCalculator from '@/components/tools/CarbonEquivalentCalculator.vue'
 import MetalCompatibilityTable from '@/components/tools/MetalCompatibilityTable.vue'
 import { defectChallenges } from '@/content/tools/defect-challenges'
+import { Calculator, ScanSearch, ClipboardCheck, FlaskConical, Layers, ClipboardList } from 'lucide-vue-next'
 
 const activeTab = ref<'calculator' | 'defects' | 'checklist' | 'ce' | 'compat'>('calculator')
 const router = useRouter()
@@ -21,54 +22,62 @@ function nextDefect() {
 
 <template>
   <div class="page">
-    <div class="header">
-      <div class="gost-tag">ИНСТРУМЕНТЫ</div>
+    <div class="page-header">
+      <div class="gost-tag">Инструменты</div>
       <h2>Инструменты сварщика</h2>
     </div>
 
     <button class="custom-btn" @click="router.push('/tools/checklists')">
-      📝 Мой чеклист
+      <ClipboardList :size="16" />
+      Мой чеклист
     </button>
 
+    <!-- Tabs -->
     <div class="tabs">
       <button
         class="tab-btn"
         :class="{ active: activeTab === 'calculator' }"
         @click="activeTab = 'calculator'"
       >
-        🔢 Калькулятор
+        <Calculator :size="15" />
+        Калькулятор
       </button>
       <button
         class="tab-btn"
         :class="{ active: activeTab === 'defects' }"
         @click="activeTab = 'defects'"
       >
-        🔍 Дефекты
+        <ScanSearch :size="15" />
+        Дефекты
       </button>
       <button
         class="tab-btn"
         :class="{ active: activeTab === 'checklist' }"
         @click="activeTab = 'checklist'"
       >
-        ✅ Чеклист
+        <ClipboardCheck :size="15" />
+        Чеклист
       </button>
       <button
         class="tab-btn"
         :class="{ active: activeTab === 'ce' }"
         @click="activeTab = 'ce'"
       >
-        ⚗️ Углеродный эквивалент
+        <FlaskConical :size="15" />
+        Углерод
       </button>
       <button
         class="tab-btn"
         :class="{ active: activeTab === 'compat' }"
         @click="activeTab = 'compat'"
       >
-        🔗 Совместимость металлов
+        <Layers :size="15" />
+        Металлы
       </button>
     </div>
 
-    <div class="tool-content card">
+    <!-- Tool content -->
+    <div class="tool-content card animate-fade-in">
       <ModeCalculator v-if="activeTab === 'calculator'" />
 
       <div v-else-if="activeTab === 'defects'">
@@ -91,15 +100,33 @@ function nextDefect() {
 </template>
 
 <style scoped>
-.header { margin-bottom: 16px; }
-.header h2 { margin-top: 4px; }
+.custom-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  background: var(--bg-secondary);
+  border: 1px dashed var(--accent-border);
+  border-radius: var(--radius);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.custom-btn:hover {
+  background: var(--accent-light);
+}
 
 .tabs {
   display: flex;
   gap: 8px;
   margin-bottom: 16px;
   overflow-x: auto;
-  white-space: nowrap;
   -webkit-overflow-scrolling: touch;
   padding-bottom: 4px;
   scrollbar-width: none;
@@ -111,52 +138,34 @@ function nextDefect() {
 
 .tab-btn {
   flex-shrink: 0;
-  display: inline-flex;
-  flex-direction: column;
+  display: flex;
   align-items: center;
-  min-width: 72px;
-  padding: 8px 12px;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 14px;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius);
   background: var(--bg-secondary);
   color: var(--text-secondary);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  white-space: nowrap;
 }
 
 .tab-btn.active {
   border-color: var(--accent);
   color: var(--accent);
-  background: rgba(233,69,96,0.08);
+  background: var(--accent-light);
 }
 
-.tool-content {
-  padding: 20px;
+.tab-btn:hover:not(.active) {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
 }
 
-.custom-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 12px;
-  background: var(--bg-secondary);
-  border: 1px dashed var(--accent);
-  border-radius: 10px;
-  color: var(--accent);
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.custom-btn:hover {
-  background: rgba(233,69,96,0.08);
-}
+.tool-content { padding: 20px; }
 
 .defect-counter {
   text-align: center;

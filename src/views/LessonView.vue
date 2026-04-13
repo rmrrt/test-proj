@@ -6,6 +6,7 @@ import { useProgressStore } from '@/stores/progress'
 import TheoryStep from '@/components/lesson/TheoryStep.vue'
 import QuizStep from '@/components/lesson/QuizStep.vue'
 import DefectChallenge from '@/components/tools/DefectChallenge.vue'
+import { ChevronLeft, Award } from 'lucide-vue-next'
 
 const props = defineProps<{ lessonId: string }>()
 const router = useRouter()
@@ -21,22 +22,15 @@ const finished = ref(false)
 
 const currentStep = computed(() => lesson.value?.steps[stepIndex.value])
 
-function onTheoryDone() {
-  advance()
-}
+function onTheoryDone() { advance() }
 
 function onQuizDone(score: number) {
   quizScore.value = score
   const passed = score >= (currentStep.value as any).passingScore
-  if (passed) {
-    advance()
-  }
-  // If failed, QuizStep handles retry internally — re-emit when they pass
+  if (passed) advance()
 }
 
-function onDefectDone() {
-  advance()
-}
+function onDefectDone() { advance() }
 
 function advance() {
   if (!lesson.value) return
@@ -50,13 +44,10 @@ function advance() {
 function finishLesson() {
   if (!lesson.value) return
   progress.completeLesson(lesson.value.id, quizScore.value ?? undefined)
-
-  // Check if module is now complete
   if (mod.value) {
     const allDone = mod.value.lessons.every((l) => progress.isLessonCompleted(l.id))
     if (allDone) progress.completeModule(mod.value.id)
   }
-
   finished.value = true
 }
 
@@ -70,41 +61,54 @@ function getDefectChallenge(challengeId: string) {
     <p>Урок не найден.</p>
   </div>
 
-  <div v-else-if="finished" class="page finish-page">
+  <!-- Finish screen -->
+  <div v-else-if="finished" class="finish-page animate-fade-in">
     <div class="finish-content">
-      <div class="finish-icon">🎉</div>
+      <div class="finish-icon-wrap">
+        <Award :size="52" class="finish-icon" />
+      </div>
       <h2>Урок пройден!</h2>
       <p class="finish-sub">{{ lesson.title }}</p>
+      <div v-if="quizScore !== null" class="finish-score">
+        <span class="score-value">{{ quizScore }}%</span>
+        <span class="score-label">результат квиза</span>
+      </div>
       <button class="btn btn-primary" @click="router.push('/modules')">
         К модулям
       </button>
     </div>
   </div>
 
+  <!-- Lesson -->
   <div v-else class="lesson-view">
-    <!-- Шапка -->
+    <!-- Header -->
     <div class="lesson-header">
-      <button class="back-btn" @click="router.back()">← Назад</button>
+      <button class="back-btn" @click="router.back()">
+        <ChevronLeft :size="18" />
+        <span>Назад</span>
+      </button>
       <div class="lesson-meta">
         <div class="gost-tag">{{ mod?.title }}</div>
         <h2 class="lesson-title">{{ lesson.title }}</h2>
       </div>
-      <div class="step-indicator">
-        {{ stepIndex + 1 }}/{{ lesson.steps.length }}
+      <div class="step-counter">
+        <span class="step-num">{{ stepIndex + 1 }}</span>
+        <span class="step-sep">/</span>
+        <span class="step-total">{{ lesson.steps.length }}</span>
       </div>
     </div>
 
-    <!-- Прогресс шагов -->
+    <!-- Step progress bar -->
     <div class="step-progress">
       <div
         v-for="(_, i) in lesson.steps"
         :key="i"
-        class="step-dot"
+        class="step-segment"
         :class="{ done: i < stepIndex, active: i === stepIndex }"
       />
     </div>
 
-    <!-- Контент шага -->
+    <!-- Step content -->
     <div class="page step-content">
       <template v-if="currentStep?.type === 'theory'">
         <TheoryStep
@@ -145,72 +149,75 @@ function getDefectChallenge(challengeId: string) {
 .lesson-header {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  padding: 12px 16px 0;
+  gap: 10px;
+  padding: 12px 16px;
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border);
 }
 
 .back-btn {
+  display: flex;
+  align-items: center;
+  gap: 2px;
   background: none;
   border: none;
   color: var(--text-secondary);
   cursor: pointer;
-  font-size: 14px;
-  padding: 4px 0;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 2px 0;
   white-space: nowrap;
   flex-shrink: 0;
-  padding-top: 2px;
+  transition: color 0.15s;
 }
+.back-btn:hover { color: var(--accent); }
 
-.back-btn:hover { color: var(--text-primary); }
-
-.lesson-meta {
-  flex: 1;
-  padding-bottom: 12px;
-}
+.lesson-meta { flex: 1; padding-bottom: 4px; }
 
 .lesson-title {
-  font-size: 16px;
-  margin-top: 2px;
-  line-height: 1.3;
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 3px;
+  line-height: 1.35;
 }
 
-.step-indicator {
-  font-size: 12px;
-  color: var(--text-secondary);
-  white-space: nowrap;
+.step-counter {
+  display: flex;
+  align-items: baseline;
+  gap: 1px;
   flex-shrink: 0;
-  padding-top: 4px;
+  margin-top: 2px;
 }
+.step-num  { font-size: 14px; font-weight: 700; color: var(--accent); }
+.step-sep  { font-size: 12px; color: var(--text-muted); margin: 0 1px; }
+.step-total { font-size: 12px; color: var(--text-muted); }
 
 .step-progress {
   display: flex;
-  gap: 4px;
-  padding: 8px 16px;
+  gap: 3px;
+  padding: 0 16px 12px;
   background: var(--bg-secondary);
 }
 
-.step-dot {
+.step-segment {
   flex: 1;
   height: 3px;
   background: var(--border);
   border-radius: 2px;
-  transition: background 0.3s;
+  transition: background 0.3s ease;
 }
+.step-segment.done   { background: var(--success); }
+.step-segment.active { background: var(--accent); }
 
-.step-dot.done { background: var(--success); }
-.step-dot.active { background: var(--accent); }
+.step-content { flex: 1; }
 
-.step-content {
-  flex: 1;
-}
-
-/* Finish screen */
+/* Finish */
 .finish-page {
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 32px 24px;
 }
 
 .finish-content {
@@ -219,8 +226,40 @@ function getDefectChallenge(challengeId: string) {
   flex-direction: column;
   align-items: center;
   gap: 12px;
+  width: 100%;
+  max-width: 320px;
 }
 
-.finish-icon { font-size: 64px; }
-.finish-sub { color: var(--text-secondary); }
+.finish-icon-wrap {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  border: 2px solid var(--accent-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.finish-icon { color: var(--accent); }
+.finish-content h2 { font-size: 24px; }
+.finish-sub { color: var(--text-secondary); font-size: 14px; }
+
+.finish-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 24px;
+  margin: 4px 0;
+}
+.score-value { font-size: 28px; font-weight: 700; color: var(--accent); }
+.score-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; }
+
+.finish-content .btn { margin-top: 8px; }
 </style>

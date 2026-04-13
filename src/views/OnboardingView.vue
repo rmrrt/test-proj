@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { useProgressStore } from '@/stores/progress'
+import { ChevronRight } from 'lucide-vue-next'
 
 const router = useRouter()
 const progressStore = useProgressStore()
@@ -13,20 +14,20 @@ function choose(level: 'beginner' | 'experienced') {
 
 <template>
   <div class="onboarding">
-    <div class="hero">
-      <div class="gost-tag">НАЧАЛО ОБУЧЕНИЯ</div>
+    <div class="hero animate-fade-in">
+      <div class="gost-tag">Начало обучения</div>
       <h1>Сварка с нуля</h1>
-      <p class="subtitle">Обучение по российским ГОСТ-стандартам. Выбери с чего начать.</p>
+      <p class="subtitle">Обучение по российским ГОСТ-стандартам.<br>Выбери с чего начать.</p>
     </div>
 
-    <div class="choices">
+    <div class="choices animate-fade-in-up" style="animation-delay:150ms">
       <button class="choice-card" @click="choose('beginner')">
         <div class="choice-icon">🔰</div>
         <div class="choice-content">
           <h3>Я новичок</h3>
           <p>Начать с самых азов: что такое сварка, как работает, техника безопасности</p>
         </div>
-        <span class="choice-arrow">→</span>
+        <ChevronRight :size="20" class="choice-arrow" />
       </button>
 
       <button class="choice-card" @click="choose('experienced')">
@@ -35,7 +36,7 @@ function choose(level: 'beginner' | 'experienced') {
           <h3>Уже варил</h3>
           <p>Пропустить основы и перейти сразу к оборудованию и технике</p>
         </div>
-        <span class="choice-arrow">→</span>
+        <ChevronRight :size="20" class="choice-arrow" />
       </button>
     </div>
 
@@ -52,21 +53,45 @@ function choose(level: 'beginner' | 'experienced') {
   padding: 32px 20px;
   gap: 40px;
 }
+
 .hero { text-align: center; }
 .hero h1 { font-size: 32px; margin: 12px 0 8px; }
 .subtitle { color: var(--text-secondary); font-size: 15px; line-height: 1.6; }
+
 .choices { display: flex; flex-direction: column; gap: 12px; }
+
 .choice-card {
-  display: flex; align-items: center; gap: 16px;
-  background: var(--bg-secondary); border: 1px solid var(--border);
-  border-radius: 12px; padding: 20px; cursor: pointer; text-align: left;
-  transition: border-color 0.15s, transform 0.1s; color: var(--text-primary); width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, transform 0.12s, background 0.15s;
+  color: var(--text-primary);
+  width: 100%;
 }
-.choice-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+.choice-card:hover {
+  border-color: var(--accent-border);
+  background: var(--bg-elevated);
+  transform: translateY(-1px);
+}
+
 .choice-card:active { transform: scale(0.98); }
+
 .choice-icon { font-size: 32px; flex-shrink: 0; }
 .choice-content h3 { margin-bottom: 4px; }
 .choice-content p { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
-.choice-arrow { margin-left: auto; color: var(--accent); font-size: 20px; flex-shrink: 0; }
-.disclaimer { text-align: center; font-size: 11px; color: var(--text-secondary); line-height: 1.5; }
+.choice-arrow { margin-left: auto; color: var(--accent); flex-shrink: 0; }
+
+.disclaimer {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
 </style>

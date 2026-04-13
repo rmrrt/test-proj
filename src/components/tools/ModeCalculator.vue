@@ -259,6 +259,30 @@ input[type="range"] {
   color: var(--text-secondary);
 }
 
+.joint-options {
+  display: flex;
+  gap: 8px;
+}
+
+.joint-btn {
+  flex: 1;
+  padding: 8px 4px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.joint-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
+}
+
 /* Result */
 .result {
   background: var(--bg-secondary);
@@ -305,9 +329,10 @@ input[type="range"] {
 .result-note {
   font-size: 12px;
   color: var(--text-secondary);
-  background: rgba(233,69,96,0.06);
-  border-radius: 6px;
-  padding: 8px;
+  background: var(--accent-light);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
+  padding: 8px 10px;
   line-height: 1.4;
   margin-bottom: 12px;
 }
