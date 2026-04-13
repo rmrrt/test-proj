@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
+import { Home, Wrench, HardHat, BarChart3, Info } from 'lucide-vue-next'
 
 const route = useRoute()
 
 const tabs = [
-  { path: '/modules',  icon: '🏠', label: 'Модули' },
-  { path: '/tools',    icon: '🔧', label: 'Инструменты' },
-  { path: '/gear',     icon: '🛒', label: 'Снаряжение' },
-  { path: '/progress', icon: '📊', label: 'Прогресс' },
-  { path: '/about',    icon: 'ℹ️',  label: 'О нас' },
+  { path: '/modules',  Icon: Home,       label: 'Модули' },
+  { path: '/tools',    Icon: Wrench,      label: 'Инструменты' },
+  { path: '/gear',     Icon: HardHat,     label: 'Снаряжение' },
+  { path: '/progress', Icon: BarChart3,   label: 'Прогресс' },
+  { path: '/about',    Icon: Info,        label: 'О нас' },
 ]
 </script>
 
@@ -21,7 +22,9 @@ const tabs = [
       class="tab"
       :class="{ active: route.path === tab.path }"
     >
-      <span class="tab-icon">{{ tab.icon }}</span>
+      <span class="tab-icon-wrap">
+        <component :is="tab.Icon" :size="20" :stroke-width="route.path === tab.path ? 2.2 : 1.7" />
+      </span>
       <span class="tab-label">{{ tab.label }}</span>
     </RouterLink>
   </nav>
@@ -41,6 +44,8 @@ const tabs = [
   display: flex;
   align-items: stretch;
   z-index: 100;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .tab {
@@ -49,14 +54,50 @@ const tabs = [
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 3px;
   text-decoration: none;
-  color: var(--text-secondary);
-  transition: color 0.15s;
-  padding: 4px 0;
+  color: var(--text-muted);
+  transition: color 0.18s;
+  padding: 6px 0 4px;
+  position: relative;
 }
 
-.tab.active { color: var(--accent); }
-.tab-icon { font-size: 18px; line-height: 1; }
-.tab-label { font-size: 9px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; }
+.tab::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 24px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 0 0 2px 2px;
+  transition: transform 0.2s ease;
+}
+
+.tab.active {
+  color: var(--accent);
+}
+
+.tab.active::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.tab-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s;
+}
+
+.tab.active .tab-icon-wrap {
+  transform: translateY(-1px);
+}
+
+.tab-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
 </style>
