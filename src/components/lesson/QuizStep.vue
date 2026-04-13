@@ -2,6 +2,9 @@
 import { ref, computed } from 'vue'
 import type { Question } from '@/types/content'
 import { Lightbulb, CheckCircle2, ChevronRight } from 'lucide-vue-next'
+import { useDevMode } from '@/composables/useDevMode'
+
+const { isDevMode } = useDevMode()
 
 const props = defineProps<{
   questions: Question[]
@@ -76,12 +79,14 @@ function next() {
           :class="{
             correct: answered && i === current.correctIndex,
             wrong: answered && selected === i && i !== current.correctIndex,
+            'dev-correct': isDevMode && !answered && i === current.correctIndex,
           }"
           :disabled="answered"
           @click="answer(i)"
         >
           <span class="option-letter">{{ ['А', 'Б', 'В', 'Г'][i] }}</span>
           <span class="option-text">{{ option }}</span>
+          <span v-if="isDevMode && !answered && i === current.correctIndex" class="dev-hint">✓</span>
         </button>
       </div>
 
@@ -217,6 +222,18 @@ function next() {
 
 .option.correct .option-letter { background: var(--success); border-color: var(--success); color: #fff; }
 .option.wrong   .option-letter { background: var(--error);   border-color: var(--error);   color: #fff; }
+
+.option.dev-correct {
+  border-color: rgba(63, 185, 80, 0.5);
+}
+
+.dev-hint {
+  margin-left: auto;
+  font-size: 14px;
+  color: var(--success);
+  font-weight: 700;
+  flex-shrink: 0;
+}
 
 .option-text {
   font-size: 14px;
