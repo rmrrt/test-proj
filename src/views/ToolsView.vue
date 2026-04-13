@@ -6,10 +6,12 @@ import DefectChallenge from '@/components/tools/DefectChallenge.vue'
 import WeldingChecklist from '@/components/tools/WeldingChecklist.vue'
 import CarbonEquivalentCalculator from '@/components/tools/CarbonEquivalentCalculator.vue'
 import MetalCompatibilityTable from '@/components/tools/MetalCompatibilityTable.vue'
+import HeatInputCalculator from '@/components/tools/HeatInputCalculator.vue'
+import HardnessPredictorCalculator from '@/components/tools/HardnessPredictorCalculator.vue'
 import { defectChallenges } from '@/content/tools/defect-challenges'
-import { Calculator, ScanSearch, ClipboardCheck, FlaskConical, Layers, ClipboardList } from 'lucide-vue-next'
+import { Calculator, ScanSearch, ClipboardCheck, FlaskConical, Layers, ClipboardList, Zap, Flame } from 'lucide-vue-next'
 
-const activeTab = ref<'calculator' | 'defects' | 'checklist' | 'ce' | 'compat'>('calculator')
+const activeTab = ref<'calculator' | 'defects' | 'checklist' | 'ce' | 'compat' | 'heat' | 'hardness'>('calculator')
 const router = useRouter()
 const currentDefectIndex = ref(0)
 const defectKey = ref(0)
@@ -74,6 +76,22 @@ function nextDefect() {
         <Layers :size="15" />
         Металлы
       </button>
+      <button
+        class="tab-btn"
+        :class="{ active: activeTab === 'heat' }"
+        @click="activeTab = 'heat'"
+      >
+        <Zap :size="15" />
+        Тепловой ввод
+      </button>
+      <button
+        class="tab-btn"
+        :class="{ active: activeTab === 'hardness' }"
+        @click="activeTab = 'hardness'"
+      >
+        <Flame :size="15" />
+        Твёрдость ЗТВ
+      </button>
     </div>
 
     <!-- Tool content -->
@@ -95,6 +113,8 @@ function nextDefect() {
       <WeldingChecklist v-else-if="activeTab === 'checklist'" />
       <CarbonEquivalentCalculator v-else-if="activeTab === 'ce'" />
       <MetalCompatibilityTable v-else-if="activeTab === 'compat'" />
+      <HeatInputCalculator v-else-if="activeTab === 'heat'" />
+      <HardnessPredictorCalculator v-else-if="activeTab === 'hardness'" />
     </div>
   </div>
 </template>
