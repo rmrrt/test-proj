@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useContentStore } from '@/stores/content'
 import { useProgressStore } from '@/stores/progress'
 import { useDevMode } from '@/composables/useDevMode'
@@ -10,6 +10,8 @@ const progress = useProgressStore()
 const { isDevMode } = useDevMode()
 const router = useRouter()
 
+const searchQuery = ref('')
+
 const modulesList = computed(() =>
   content.modules.map((mod) => ({
     ...mod,
@@ -19,6 +21,17 @@ const modulesList = computed(() =>
   })),
 )
 
+const filteredResults = computed(() => {
+  const q = searchQuery.value.trim().toLowerCase()
+  if (!q) return []
+  return content.modules
+    .map((mod) => ({
+      mod,
+      lessons: mod.lessons.filter((l) => l.title.toLowerCase().includes(q)),
+    }))
+    .filter((r) => r.lessons.length > 0)
+})
+
 function openFirstLesson(moduleId: string) {
   const mod = content.getModule(moduleId)
   if (!mod) return
@@ -26,6 +39,10 @@ function openFirstLesson(moduleId: string) {
   const target = firstIncomplete ?? mod.lessons[0]
   if (!target) return
   router.push(`/lesson/${target.id}`)
+}
+
+function openLesson(lessonId: string) {
+  router.push(`/lesson/${lessonId}`)
 }
 </script>
 
@@ -36,41 +53,98 @@ function openFirstLesson(moduleId: string) {
       <h2>Модули</h2>
     </div>
 
-    <div class="modules-list">
-      <div
-        v-for="mod in modulesList"
-        :key="mod.id"
-        class="module-card"
-        :class="{ locked: !mod.unlocked, completed: mod.completed }"
-        @click="mod.unlocked && openFirstLesson(mod.id)"
-      >
-        <div class="module-icon">
-          <span v-if="!mod.unlocked">🔒</span>
-          <span v-else-if="mod.completed">✅</span>
-          <span v-else>{{ mod.icon }}</span>
-        </div>
-        <div class="module-info">
-          <div class="module-title-row">
-            <h3>{{ mod.title }}</h3>
-            <span v-if="mod.skippable" class="skip-badge">пропускаемый</span>
-          </div>
-          <p class="module-desc">{{ mod.description }}</p>
-          <div class="module-progress">
-            <div class="progress-bar">
-              <div class="progress-fill" :style="{ width: mod.lessons.length ? `${(mod.completedLessons / mod.lessons.length) * 100}%` : '0%' }" />
-            </div>
-            <span class="progress-text">{{ mod.completedLessons }}/{{ mod.lessons.length }} уроков</span>
-          </div>
-        </div>
-        <span v-if="mod.unlocked" class="module-arrow">→</span>
-      </div>
+    <div class="search-wrap">
+      <input
+        v-model="searchQuery"
+        class="search-input"
+        type="search"
+        placeholder="Поиск по урокам..."
+      />
     </div>
+
+    <template v-if="searchQuery.trim()">
+      <div v-if="filteredResults.length === 0" class="search-empty">Ничего не найдено</div>
+      <div v-else class="search-results">
+        <div v-for="result in filteredResults" :key="result.mod.id" class="search-group">
+          <div class="search-group-title">{{ result.mod.icon }} {{ result.mod.title }}</div>
+          <div
+            v-for="lesson in result.lessons"
+            :key="lesson.id"
+            class="search-lesson"
+            @click="openLesson(lesson.id)"
+          >
+            <span class="search-lesson-check">{{ progress.isLessonCompleted(lesson.id) ? '✅' : '○' }}</span>
+            <span>{{ lesson.title }}</span>
+            <span class="search-arrow">→</span>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template v-else>
+      <div class="modules-list">
+        <div
+          v-for="mod in modulesList"
+          :key="mod.id"
+          class="module-card"
+          :class="{ locked: !mod.unlocked, completed: mod.completed }"
+          @click="mod.unlocked && openFirstLesson(mod.id)"
+        >
+          <div class="module-icon">
+            <span v-if="!mod.unlocked">🔒</span>
+            <span v-else-if="mod.completed">✅</span>
+            <span v-else>{{ mod.icon }}</span>
+          </div>
+          <div class="module-info">
+            <div class="module-title-row">
+              <h3>{{ mod.title }}</h3>
+              <span v-if="mod.skippable" class="skip-badge">пропускаемый</span>
+            </div>
+            <p class="module-desc">{{ mod.description }}</p>
+            <div class="module-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" :style="{ width: mod.lessons.length ? `${(mod.completedLessons / mod.lessons.length) * 100}%` : '0%' }" />
+              </div>
+              <span class="progress-text">{{ mod.completedLessons }}/{{ mod.lessons.length }} уроков</span>
+            </div>
+          </div>
+          <span v-if="mod.unlocked" class="module-arrow">→</span>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
 <style scoped>
-.header { margin-bottom: 20px; }
+.header { margin-bottom: 16px; }
 .header h2 { margin-top: 4px; }
+
+.search-wrap { margin-bottom: 16px; }
+.search-input {
+  width: 100%; box-sizing: border-box;
+  padding: 10px 14px; font-size: 15px;
+  background: var(--bg-secondary); color: var(--text-primary);
+  border: 1px solid var(--border); border-radius: 10px;
+  outline: none; transition: border-color 0.15s;
+}
+.search-input:focus { border-color: var(--accent); }
+
+.search-empty { text-align: center; color: var(--text-secondary); padding: 32px 0; font-size: 15px; }
+.search-results { display: flex; flex-direction: column; gap: 14px; }
+.search-group-title { font-size: 13px; font-weight: 700; color: var(--text-secondary); margin-bottom: 6px; }
+.search-group { display: flex; flex-direction: column; }
+.search-lesson {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; font-size: 14px;
+  background: var(--bg-secondary); border: 1px solid var(--border);
+  border-radius: 8px; cursor: pointer; margin-bottom: 6px;
+  transition: border-color 0.15s;
+}
+.search-lesson:hover { border-color: var(--accent); }
+.search-lesson-check { flex-shrink: 0; font-size: 13px; }
+.search-lesson span:nth-child(2) { flex: 1; }
+.search-arrow { color: var(--accent); font-size: 16px; flex-shrink: 0; }
+
 .modules-list { display: flex; flex-direction: column; gap: 12px; }
 .module-card {
   display: flex; align-items: center; gap: 14px;

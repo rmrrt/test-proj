@@ -4,9 +4,11 @@ import { useRouter } from 'vue-router'
 import ModeCalculator from '@/components/tools/ModeCalculator.vue'
 import DefectChallenge from '@/components/tools/DefectChallenge.vue'
 import WeldingChecklist from '@/components/tools/WeldingChecklist.vue'
+import CarbonEquivalentCalculator from '@/components/tools/CarbonEquivalentCalculator.vue'
+import MetalCompatibilityTable from '@/components/tools/MetalCompatibilityTable.vue'
 import { defectChallenges } from '@/content/tools/defect-challenges'
 
-const activeTab = ref<'calculator' | 'defects' | 'checklist'>('calculator')
+const activeTab = ref<'calculator' | 'defects' | 'checklist' | 'ce' | 'compat'>('calculator')
 const router = useRouter()
 const currentDefectIndex = ref(0)
 const defectKey = ref(0)
@@ -50,6 +52,20 @@ function nextDefect() {
       >
         ✅ Чеклист
       </button>
+      <button
+        class="tab-btn"
+        :class="{ active: activeTab === 'ce' }"
+        @click="activeTab = 'ce'"
+      >
+        ⚗️ Углеродный эквивалент
+      </button>
+      <button
+        class="tab-btn"
+        :class="{ active: activeTab === 'compat' }"
+        @click="activeTab = 'compat'"
+      >
+        🔗 Совместимость металлов
+      </button>
     </div>
 
     <div class="tool-content card">
@@ -68,6 +84,8 @@ function nextDefect() {
       </div>
 
       <WeldingChecklist v-else-if="activeTab === 'checklist'" />
+      <CarbonEquivalentCalculator v-else-if="activeTab === 'ce'" />
+      <MetalCompatibilityTable v-else-if="activeTab === 'compat'" />
     </div>
   </div>
 </template>
@@ -80,11 +98,24 @@ function nextDefect() {
   display: flex;
   gap: 8px;
   margin-bottom: 16px;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .tab-btn {
-  flex: 1;
-  padding: 10px;
+  flex-shrink: 0;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 72px;
+  padding: 8px 12px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--bg-secondary);
