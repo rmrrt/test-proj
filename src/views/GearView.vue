@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ExternalLink } from 'lucide-vue-next'
+
 const categories = [
   {
     title: 'Сварочный инвертор',
@@ -78,30 +80,47 @@ const categories = [
     ],
   },
 ]
+
+const kitItems = [
+  { icon: '⚡', label: 'Инвертор 160А' },
+  { icon: '😷', label: 'Маска-хамелеон' },
+  { icon: '🔩', label: 'Электроды АНО-21 Ø3' },
+  { icon: '🧤', label: 'Краги спилковые' },
+  { icon: '🔥', label: 'Огнетушитель' },
+]
 </script>
 
 <template>
   <div class="page">
-    <div class="header">
-      <div class="gost-tag">РОССИЙСКИЙ РЫНОК</div>
+    <div class="page-header">
+      <div class="gost-tag">Российский рынок</div>
       <h2>Снаряжение</h2>
       <p class="subtitle">Что покупать, на что смотреть, где брать</p>
     </div>
 
-    <div class="starter-kit card">
-      <h3>🎒 Минимальный стартовый комплект</h3>
+    <!-- Starter kit -->
+    <div class="starter-kit card animate-fade-in-up">
+      <div class="kit-title">
+        <span class="kit-emoji">🎒</span>
+        <h3>Минимальный стартовый комплект</h3>
+      </div>
       <div class="kit-items">
-        <div class="kit-item">⚡ Инвертор 160А</div>
-        <div class="kit-item">😷 Маска-хамелеон</div>
-        <div class="kit-item">🔩 Электроды АНО-21 Ø3</div>
-        <div class="kit-item">🧤 Краги спилковые</div>
-        <div class="kit-item">🔥 Огнетушитель</div>
+        <div v-for="item in kitItems" :key="item.label" class="kit-item">
+          <span>{{ item.icon }}</span>
+          {{ item.label }}
+        </div>
       </div>
       <p class="kit-total">Итого от <strong>~7 000–12 000 ₽</strong></p>
     </div>
 
+    <!-- Categories -->
     <div class="categories">
-      <div v-for="cat in categories" :key="cat.title" class="category card">
+      <div
+        v-for="(cat, idx) in categories"
+        :key="cat.title"
+        class="category card animate-fade-in-up"
+        :style="{ animationDelay: `${(idx + 1) * 60}ms` }"
+      >
         <div class="cat-header">
           <span class="cat-icon">{{ cat.icon }}</span>
           <div>
@@ -110,6 +129,7 @@ const categories = [
           </div>
         </div>
 
+        <!-- Params grid -->
         <div class="params">
           <div v-for="p in cat.params" :key="p.label" class="param">
             <span class="param-label">{{ p.label }}</span>
@@ -117,6 +137,7 @@ const categories = [
           </div>
         </div>
 
+        <!-- Tiers -->
         <div class="tiers">
           <div v-for="tier in cat.tiers" :key="tier.name" class="tier">
             <div class="tier-header">
@@ -127,9 +148,17 @@ const categories = [
           </div>
         </div>
 
+        <!-- Links -->
         <div class="links">
-          <a v-for="link in cat.links" :key="link.label" :href="link.url" target="_blank" class="link-btn">
-            {{ link.label }} →
+          <a
+            v-for="link in cat.links"
+            :key="link.label"
+            :href="link.url"
+            target="_blank"
+            class="link-btn"
+          >
+            {{ link.label }}
+            <ExternalLink :size="11" />
           </a>
         </div>
       </div>
@@ -138,28 +167,34 @@ const categories = [
 </template>
 
 <style scoped>
-.header { margin-bottom: 16px; }
-.header h2 { margin-top: 4px; }
 .subtitle { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
 
-.starter-kit {
-  margin-bottom: 16px;
-}
+/* Starter kit */
+.starter-kit { margin-bottom: 16px; }
 
-.starter-kit h3 { margin-bottom: 12px; }
+.kit-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.kit-emoji { font-size: 20px; }
 
 .kit-items {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .kit-item {
-  background: rgba(233,69,96,0.08);
-  border: 1px solid rgba(233,69,96,0.2);
-  border-radius: 6px;
-  padding: 4px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent-light);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-sm);
+  padding: 5px 10px;
   font-size: 13px;
 }
 
@@ -167,14 +202,10 @@ const categories = [
   font-size: 13px;
   color: var(--text-secondary);
 }
+.kit-total strong { color: var(--accent); font-weight: 700; }
 
-.kit-total strong { color: var(--accent); }
-
-.categories {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+/* Categories */
+.categories { display: flex; flex-direction: column; gap: 12px; }
 
 .category { display: flex; flex-direction: column; gap: 12px; }
 
@@ -184,9 +215,10 @@ const categories = [
   align-items: flex-start;
 }
 
-.cat-icon { font-size: 28px; flex-shrink: 0; }
-.cat-desc { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.cat-icon { font-size: 28px; flex-shrink: 0; line-height: 1; }
+.cat-desc { font-size: 12px; color: var(--text-secondary); margin-top: 3px; line-height: 1.4; }
 
+/* Params */
 .params {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -196,53 +228,64 @@ const categories = [
 .param {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  background: rgba(255,255,255,0.03);
-  border-radius: 6px;
+  gap: 3px;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm);
   padding: 8px;
 }
 
-.param-label { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
-.param-value { font-size: 12px; font-weight: 600; }
-
-.tiers {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+.param-label {
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-weight: 600;
 }
+
+.param-value { font-size: 12px; font-weight: 700; color: var(--text-primary); }
+
+/* Tiers */
+.tiers { display: flex; flex-direction: column; gap: 6px; }
 
 .tier {
-  padding: 8px 12px;
-  background: rgba(255,255,255,0.03);
-  border-radius: 6px;
+  padding: 9px 12px;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid transparent;
+  transition: border-color 0.15s;
 }
+
+.tier:first-child { border-left-color: var(--text-muted); }
+.tier:nth-child(2) { border-left-color: var(--accent); }
+.tier:last-child   { border-left-color: var(--success); }
 
 .tier-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 2px;
 }
 
-.tier-name { font-size: 12px; font-weight: 700; color: var(--accent); }
+.tier-name  { font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
 .tier-price { font-size: 12px; color: var(--text-primary); font-weight: 600; }
 .tier-example { font-size: 12px; color: var(--text-secondary); }
 
-.links {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
+/* Links */
+.links { display: flex; gap: 8px; flex-wrap: wrap; }
 
 .link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 12px;
   font-weight: 600;
-  color: var(--text-link);
+  color: var(--accent);
   text-decoration: none;
-  background: rgba(88,166,255,0.08);
-  border: 1px solid rgba(88,166,255,0.2);
-  border-radius: 6px;
-  padding: 4px 10px;
+  background: var(--accent-light);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-sm);
+  padding: 5px 10px;
+  transition: background 0.15s;
 }
-
-.link-btn:hover { background: rgba(88,166,255,0.15); }
+.link-btn:hover { background: rgba(255, 107, 0, 0.2); }
 </style>

@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import ModeCalculator from '@/components/tools/ModeCalculator.vue'
 import DefectChallenge from '@/components/tools/DefectChallenge.vue'
 import { defectChallenges } from '@/content/tools/defect-challenges'
+import { Calculator, ScanSearch } from 'lucide-vue-next'
 
 const activeTab = ref<'calculator' | 'defects'>('calculator')
 const currentDefectIndex = ref(0)
@@ -16,29 +17,33 @@ function nextDefect() {
 
 <template>
   <div class="page">
-    <div class="header">
-      <div class="gost-tag">ИНСТРУМЕНТЫ</div>
+    <div class="page-header">
+      <div class="gost-tag">Инструменты</div>
       <h2>Инструменты сварщика</h2>
     </div>
 
+    <!-- Tabs -->
     <div class="tabs">
       <button
         class="tab-btn"
         :class="{ active: activeTab === 'calculator' }"
         @click="activeTab = 'calculator'"
       >
-        🔢 Калькулятор
+        <Calculator :size="15" />
+        Калькулятор
       </button>
       <button
         class="tab-btn"
         :class="{ active: activeTab === 'defects' }"
         @click="activeTab = 'defects'"
       >
-        🔍 Дефекты
+        <ScanSearch :size="15" />
+        Дефекты
       </button>
     </div>
 
-    <div class="tool-content card">
+    <!-- Tool content -->
+    <div class="tool-content card animate-fade-in">
       <ModeCalculator v-if="activeTab === 'calculator'" />
 
       <div v-else>
@@ -57,9 +62,6 @@ function nextDefect() {
 </template>
 
 <style scoped>
-.header { margin-bottom: 16px; }
-.header h2 { margin-top: 4px; }
-
 .tabs {
   display: flex;
   gap: 8px;
@@ -68,26 +70,33 @@ function nextDefect() {
 
 .tab-btn {
   flex: 1;
-  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 11px;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius);
   background: var(--bg-secondary);
   color: var(--text-secondary);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
 
 .tab-btn.active {
   border-color: var(--accent);
   color: var(--accent);
-  background: rgba(233,69,96,0.08);
+  background: var(--accent-light);
 }
 
-.tool-content {
-  padding: 20px;
+.tab-btn:hover:not(.active) {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
 }
+
+.tool-content { padding: 20px; }
 
 .defect-counter {
   text-align: center;
