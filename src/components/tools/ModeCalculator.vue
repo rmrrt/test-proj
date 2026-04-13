@@ -159,7 +159,7 @@ input[type="range"] {
 .joint-btn.active {
   border-color: var(--accent);
   color: var(--accent);
-  background: rgba(233,69,96,0.08);
+  background: var(--accent-light);
 }
 
 .result {
@@ -200,9 +200,10 @@ input[type="range"] {
 .result-note {
   font-size: 12px;
   color: var(--text-secondary);
-  background: rgba(233,69,96,0.06);
-  border-radius: 6px;
-  padding: 8px;
+  background: var(--accent-light);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
+  padding: 8px 10px;
   line-height: 1.4;
 }
 

@@ -59,8 +59,8 @@ const allFound = () => found.value.size === props.challenge.zones.length
           :y="zone.y"
           :width="zone.width"
           :height="zone.height"
-          :fill="found.has(zone.id) ? 'rgba(233,69,96,0.25)' : 'transparent'"
-          :stroke="found.has(zone.id) ? '#e94560' : 'transparent'"
+          :fill="found.has(zone.id) ? 'rgba(255,107,0,0.25)' : 'transparent'"
+          :stroke="found.has(zone.id) ? '#FF6B00' : 'transparent'"
           stroke-width="1.5"
           rx="3"
         />
@@ -82,8 +82,8 @@ const allFound = () => found.value.size === props.challenge.zones.length
     </Transition>
 
     <div v-if="allFound()" class="all-found">
-      <p>✅ Все дефекты найдены!</p>
-      <button class="btn btn-primary" @click="emit('done')">Продолжить →</button>
+      <p class="all-found-text">Все дефекты найдены!</p>
+      <button class="btn btn-primary" @click="emit('done')">Продолжить</button>
     </div>
   </div>
 </template>
@@ -165,9 +165,10 @@ const allFound = () => found.value.size === props.challenge.zones.length
   align-items: center;
 }
 
-.all-found p {
+.all-found-text {
   color: var(--success);
   font-weight: 600;
+  font-size: 15px;
 }
 
 .slide-enter-active, .slide-leave-active { transition: all 0.2s ease; }
