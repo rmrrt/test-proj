@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ContentBlock, SourceRef } from '@/types/content'
+import { AlertTriangle, ChevronRight } from 'lucide-vue-next'
 
 defineProps<{
   blocks: ContentBlock[]
@@ -16,7 +17,7 @@ const emit = defineEmits<{ done: [] }>()
         <div v-if="block.kind === 'text'" class="block-text" v-html="renderMarkdown(block.markdown)" />
 
         <div v-else-if="block.kind === 'warning'" class="block-warning">
-          <span class="warning-icon">⚠️</span>
+          <AlertTriangle :size="18" class="warning-icon" />
           <p>{{ block.text }}</p>
         </div>
 
@@ -28,7 +29,7 @@ const emit = defineEmits<{ done: [] }>()
     </div>
 
     <div v-if="sources?.length" class="sources">
-      <span class="gost-tag">ИСТОЧНИКИ</span>
+      <span class="gost-tag">Источники</span>
       <div class="source-list">
         <a v-for="src in sources" :key="src.label" :href="src.url" target="_blank" class="source-item">
           {{ src.label }}
@@ -37,13 +38,13 @@ const emit = defineEmits<{ done: [] }>()
     </div>
 
     <button class="btn btn-primary" @click="emit('done')">
-      Понял, продолжить →
+      Понял, продолжить
+      <ChevronRight :size="16" />
     </button>
   </div>
 </template>
 
 <script lang="ts">
-// Simple markdown renderer (bold, headers, lists, tables)
 function renderMarkdown(md: string): string {
   return md
     .replace(/^## (.+)$/gm, '<h2>$1</h2>')
@@ -83,12 +84,14 @@ export { renderMarkdown }
   font-weight: 700;
   margin-bottom: 8px;
   margin-top: 4px;
+  color: var(--text-primary);
 }
 
 :deep(h3) {
   font-size: 15px;
   font-weight: 600;
   margin-bottom: 6px;
+  color: var(--accent);
 }
 
 :deep(p) {
@@ -98,7 +101,7 @@ export { renderMarkdown }
 }
 
 :deep(strong) {
-  color: #fff;
+  color: var(--text-primary);
   font-weight: 700;
 }
 
@@ -119,6 +122,8 @@ export { renderMarkdown }
   border-collapse: collapse;
   font-size: 13px;
   margin: 8px 0;
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 
 :deep(td) {
@@ -127,22 +132,29 @@ export { renderMarkdown }
 }
 
 :deep(tr:first-child td) {
-  background: rgba(233,69,96,0.1);
+  background: var(--accent-light);
   font-weight: 600;
   color: var(--accent);
+  border-color: var(--accent-border);
 }
 
+/* Warning block */
 .block-warning {
   display: flex;
   gap: 12px;
   align-items: flex-start;
-  background: rgba(233, 69, 96, 0.08);
-  border: 1px solid rgba(233, 69, 96, 0.3);
-  border-radius: 8px;
+  background: rgba(255, 107, 0, 0.08);
+  border: 1px solid rgba(255, 107, 0, 0.3);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
   padding: 14px;
 }
 
-.warning-icon { font-size: 20px; flex-shrink: 0; }
+.warning-icon {
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
 
 .block-warning p {
   color: var(--text-primary);
@@ -150,9 +162,10 @@ export { renderMarkdown }
   line-height: 1.5;
 }
 
+/* Image */
 .block-image img {
   width: 100%;
-  border-radius: 8px;
+  border-radius: var(--radius);
 }
 
 .caption {
@@ -162,10 +175,11 @@ export { renderMarkdown }
   margin-top: 6px;
 }
 
+/* Sources */
 .sources {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .source-list {
@@ -176,16 +190,17 @@ export { renderMarkdown }
 
 .source-item {
   font-size: 11px;
-  font-family: monospace;
-  color: var(--text-link);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  color: var(--accent);
   text-decoration: none;
-  background: rgba(88,166,255,0.08);
-  border: 1px solid rgba(88,166,255,0.2);
-  border-radius: 4px;
+  background: var(--accent-light);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-sm);
   padding: 3px 8px;
+  transition: background 0.15s;
 }
 
 .source-item:hover {
-  background: rgba(88,166,255,0.15);
+  background: rgba(255, 107, 0, 0.2);
 }
 </style>
