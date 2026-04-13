@@ -98,11 +98,24 @@ function nextDefect() {
   display: flex;
   gap: 8px;
   margin-bottom: 16px;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .tab-btn {
-  flex: 1;
-  padding: 10px;
+  flex-shrink: 0;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 72px;
+  padding: 8px 12px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--bg-secondary);
