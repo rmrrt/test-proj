@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ExternalLink, BookOpen, AlertTriangle } from 'lucide-vue-next'
+
 const gosts = [
   { code: 'ГОСТ 5264-80', title: 'Ручная дуговая сварка. Соединения сварные', url: 'https://docs.cntd.ru/document/1200003842' },
   { code: 'ГОСТ 9467-75', title: 'Электроды покрытые металлические для РДС', url: 'https://docs.cntd.ru/document/1200008316' },
@@ -16,68 +18,124 @@ const books = [
 
 <template>
   <div class="page">
-    <div class="header">
-      <div class="gost-tag">ДОКУМЕНТАЦИЯ</div>
+    <div class="page-header">
+      <div class="gost-tag">Документация</div>
       <h2>О приложении</h2>
     </div>
 
-    <div class="app-info card">
+    <div class="app-info card animate-fade-in-up">
       <h3>Сварщик с нуля</h3>
       <p>Интерактивное обучение сварке по российским стандартам. Для новичков и тех, кто хочет систематизировать знания.</p>
       <div class="version">v0.1.0-mvp</div>
     </div>
 
-    <div class="disclaimer card">
-      <div class="gost-tag" style="margin-bottom:8px;">⚠️ ВАЖНО</div>
+    <div class="disclaimer animate-fade-in-up" style="animation-delay:50ms">
+      <AlertTriangle :size="16" class="disclaimer-icon" />
       <p>Приложение создано в образовательных целях и <strong>не заменяет</strong> практическое обучение под руководством квалифицированного сварщика. Перед началом сварочных работ обязательно пройдите инструктаж по технике безопасности.</p>
     </div>
 
-    <div class="section">
-      <div class="gost-tag" style="margin-bottom:10px;">НОРМАТИВНАЯ БАЗА</div>
+    <div class="section animate-fade-in-up" style="animation-delay:100ms">
+      <div class="gost-tag section-label">Нормативная база</div>
       <div class="gost-list">
         <a v-for="gost in gosts" :key="gost.code" :href="gost.url" target="_blank" class="gost-item">
           <span class="gost-code">{{ gost.code }}</span>
           <span class="gost-title">{{ gost.title }}</span>
-          <span class="gost-link">↗</span>
+          <ExternalLink :size="13" class="ext-icon" />
         </a>
       </div>
     </div>
 
-    <div class="section">
-      <div class="gost-tag" style="margin-bottom:10px;">УЧЕБНАЯ ЛИТЕРАТУРА</div>
+    <div class="section animate-fade-in-up" style="animation-delay:150ms">
+      <div class="gost-tag section-label">Учебная литература</div>
       <div class="book-list">
-        <div v-for="book in books" :key="book" class="book-item">📖 {{ book }}</div>
+        <div v-for="book in books" :key="book" class="book-item">
+          <BookOpen :size="14" class="book-icon" />
+          <span>{{ book }}</span>
+        </div>
       </div>
     </div>
 
-    <div class="section">
-      <div class="gost-tag" style="margin-bottom:10px;">ОТКРЫТЫЕ ИСТОЧНИКИ</div>
+    <div class="section animate-fade-in-up" style="animation-delay:200ms">
+      <div class="gost-tag section-label">Открытые источники</div>
       <a href="https://docs.cntd.ru" target="_blank" class="source-link">
-        docs.cntd.ru — Электронный фонд правовых и нормативно-технических документов ↗
+        <span>docs.cntd.ru — Электронный фонд правовых и нормативно-технических документов</span>
+        <ExternalLink :size="13" class="ext-icon" />
       </a>
     </div>
   </div>
 </template>
 
 <style scoped>
-.header { margin-bottom: 16px; }
-.header h2 { margin-top: 4px; }
 .app-info { margin-bottom: 12px; }
 .app-info h3 { margin-bottom: 8px; }
 .app-info p { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
-.version { margin-top: 10px; font-size: 11px; font-family: monospace; color: var(--text-secondary); }
-.disclaimer { border-color: rgba(233,69,96,0.3); background: rgba(233,69,96,0.05); margin-bottom: 20px; }
+.version { margin-top: 10px; font-size: 11px; font-family: 'SF Mono', monospace; color: var(--text-muted); }
+
+.disclaimer {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: rgba(255, 107, 0, 0.07);
+  border: 1px solid var(--accent-border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-bottom: 20px;
+}
+.disclaimer-icon { color: var(--accent); flex-shrink: 0; margin-top: 1px; }
 .disclaimer p { font-size: 13px; line-height: 1.6; }
 .disclaimer strong { color: var(--accent); }
+
 .section { margin-bottom: 20px; }
+.section-label { margin-bottom: 10px; }
+
 .gost-list { display: flex; flex-direction: column; gap: 8px; }
-.gost-item { display: flex; align-items: flex-start; gap: 10px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 12px; text-decoration: none; transition: border-color 0.15s; }
-.gost-item:hover { border-color: var(--accent); }
-.gost-code { font-family: monospace; font-size: 12px; color: var(--accent); font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+
+.gost-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  text-decoration: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+.gost-item:hover { border-color: var(--accent); background: var(--bg-elevated); }
+.gost-code { font-family: 'SF Mono', monospace; font-size: 11px; color: var(--accent); font-weight: 700; white-space: nowrap; flex-shrink: 0; }
 .gost-title { flex: 1; font-size: 13px; color: var(--text-primary); line-height: 1.4; }
-.gost-link { color: var(--text-secondary); flex-shrink: 0; }
+.ext-icon { color: var(--text-muted); flex-shrink: 0; margin-top: 1px; }
+
 .book-list { display: flex; flex-direction: column; gap: 8px; }
-.book-item { font-size: 13px; color: var(--text-secondary); line-height: 1.5; padding: 10px; background: var(--bg-secondary); border-radius: 8px; border: 1px solid var(--border); }
-.source-link { font-size: 13px; color: var(--text-link); text-decoration: none; display: block; padding: 12px; background: var(--bg-secondary); border-radius: 8px; border: 1px solid var(--border); }
-.source-link:hover { border-color: var(--text-link); }
+
+.book-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  padding: 10px 12px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+.book-icon { color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+
+.source-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: none;
+  padding: 12px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  transition: border-color 0.15s, background 0.15s;
+}
+.source-link:hover { border-color: var(--accent); background: var(--bg-elevated); }
+.source-link span { flex: 1; }
 </style>
